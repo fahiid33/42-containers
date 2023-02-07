@@ -6,7 +6,7 @@
 /*   By: fstitou <fstitou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/16 00:38:26 by fstitou           #+#    #+#             */
-/*   Updated: 2023/01/29 17:43:06 by fstitou          ###   ########.fr       */
+/*   Updated: 2023/02/06 23:05:56 by fstitou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,5 +14,8 @@
 
 int main()
 {
-    ft::vector <int> v2;
+    ft::Vector <int> v;
+    ft::Vector <int> v2(4, 16);
+    ft::Vector <int> v3(v);
+
 }
