@@ -6,7 +6,7 @@
 /*   By: fstitou <fstitou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/16 00:35:24 by fstitou           #+#    #+#             */
-/*   Updated: 2023/02/07 23:43:51 by fstitou          ###   ########.fr       */
+/*   Updated: 2023/02/08 00:11:25 by fstitou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ template <class Key, class T, class Compare = std::less<Key> >
         class iterator;
         class const_iterator;
 
-        map();
+        map() : root(nullptr), tree_size(0), comp(0) {}
         explicit map(const Compare& comp);
 
         iterator begin();
