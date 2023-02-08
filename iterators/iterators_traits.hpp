@@ -1,19 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.cpp                                           :+:      :+:    :+:   */
+/*   iterators_traits.hpp                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fstitou <fstitou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/01/16 00:37:24 by fstitou           #+#    #+#             */
-/*   Updated: 2023/02/09 00:03:36 by fstitou          ###   ########.fr       */
+/*   Created: 2023/02/08 23:54:35 by fstitou           #+#    #+#             */
+/*   Updated: 2023/02/08 23:56:34 by fstitou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "map.hpp"
+#ifndef ITERATORS_TRAITS_HPP
+#define ITERATORS_TRAITS_HPP
 
-int main()
+
+namespace ft
 {
-    ft::map <std::string, int>map;
-    ft::map map1(map);
+    
 }
+
+#endif
