@@ -6,7 +6,7 @@
 /*   By: fstitou <fstitou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/16 00:35:46 by fstitou           #+#    #+#             */
-/*   Updated: 2023/02/07 23:04:14 by fstitou          ###   ########.fr       */
+/*   Updated: 2023/02/14 03:43:12 by fstitou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ namespace ft
 			_capacity = 0;
 			_buff = NULL;
 			_alloc = Allocator();
+			std::cout << "Vector constr called"<< std::endl;
 		}
 		explicit Vector(const Vector& v)
 		{
@@ -57,6 +58,7 @@ namespace ft
 			_buff = _alloc.allocate(_capacity);
 			for (size_t i = 0; i < _size; i++)
 				_alloc.construct(_buff + i, v._buff[i]);
+			// std::cout << "Vector copy constrrrr called"<< std::endl;
 		}
 		explicit Vector(size_t n, const T& value = T(),
 		const Allocator& = Allocator())
@@ -67,6 +69,7 @@ namespace ft
 				this->_alloc.construct(this->_buff + i, value);
 			this->_size = n;
 			this->_capacity = n;
+			// std::cout << "Vector constr size called"<< std::endl;
 		}
 		template <class InputIterator>
 		Vector(InputIterator first, InputIterator last,
@@ -74,7 +77,7 @@ namespace ft
 		// Vector(const Vector<T,Allocator>& x);
 		~Vector()
 		{
-			std::cout << "veddd\n";
+			// std::cout << "destructor called\n";
 		}
 		Vector<T,Allocator>& operator=(const Vector<T,Allocator>& x);
 		template <class InputIterator>
@@ -91,15 +94,36 @@ namespace ft
 		// reverse_iterator rend();
 		// const_reverse_iterator rend() const;
 		// 23.2.4.2 capacity:
-		size_t size() const;
-		size_t max_size() const;
+		size_t size() const {return this->_size;}
+		size_t max_size() const{return std::numeric_limits<std::size_t>::max() / sizeof(T);}
 		void resize(size_t sz, T c = T());
-		size_t capacity() const;
-		bool empty() const;
-		void reserve(size_t n);
+		size_t capacity() const {return this->_capacity;}
+		bool empty() const {return (_size == 0);}
+		void reserve(size_t n){
+			if (n <= _capacity) 
+				return;
+			T* newData = _alloc.allocate(n);
+			for (size_t i = 0; i < _size; ++i)
+				_alloc.construct(newData + i, _buff[i]);
+			for (size_t i = 0; i < _size; ++i)
+				_alloc.destroy(_buff + i);
+			_alloc.deallocate(_buff, _capacity);
+			_buff = newData;
+			_capacity = n;
+		}
 		// element access:
-		reference operator[](size_t n);
-		const_reference operator[](size_t n) const;
+		reference operator[](size_t n)
+		{
+			// if (n >= _size)
+			// 	throw std::out_of_range("Index is out of range");
+			return _buff[n];
+		}
+		const_reference operator[](size_t n) const
+		{
+			// if (n >= _size)
+			// 	throw std::out_of_range("Index is out of range");
+			return _buff[n];
+		}
 		const_reference at(size_t n) const;
 		reference at(size_t n);
 		reference front();
@@ -107,7 +131,12 @@ namespace ft
 		reference back();
 		const_reference back() const;
 		//  modifiers:
-		void push_back(const T& x);
+		void push_back(const T& val){
+			if (_size == _capacity)
+				reserve(_capacity ? _capacity * 2 : 1);
+			_alloc.construct(_buff + _size, val);
+			++_size;
+		}
 		void pop_back();
 		// iterator insert(iterator position, const T& x);
 		// void insert(iterator position, size_t n, const T& x);
