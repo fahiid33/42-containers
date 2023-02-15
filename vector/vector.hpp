@@ -6,7 +6,7 @@
 /*   By: fstitou <fstitou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/16 00:35:46 by fstitou           #+#    #+#             */
-/*   Updated: 2023/02/15 02:07:46 by fstitou          ###   ########.fr       */
+/*   Updated: 2023/02/15 23:24:13 by fstitou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,6 @@ namespace ft
 			_capacity = 0;
 			_buff = NULL;
 			_alloc = Allocator();
-			// std::cout << "Vector constr called"<< std::endl;
 		}
 		explicit Vector(const Vector& v)
 		{
@@ -58,29 +57,25 @@ namespace ft
 			_buff = _alloc.allocate(_capacity);
 			for (size_t i = 0; i < _size; i++)
 				_alloc.construct(_buff + i, v._buff[i]);
-			// std::cout << "Vector copy constrrrr called"<< std::endl;
 		}
 		explicit Vector(size_t n, const T& value = T(),
 		const Allocator& = Allocator())
 		{
+			if (n > this->max_size())
+				throw std::length_error("vector");
 			this->_alloc = Allocator();
 			this->_buff = this->_alloc.allocate(n);
 			for(size_t i = 0; i < n; i++)
 				this->_alloc.construct(this->_buff + i, value);
 			this->_size = n;
 			this->_capacity = n;
-			// std::cout << "Vector constr size called"<< std::endl;
 		}
 		template <class InputIterator>
 		Vector(InputIterator first, InputIterator last,
 		const Allocator& = Allocator());
-		// Vector(const Vector<T,Allocator>& x);
 		~Vector()
 		{
-			for (size_t i = _size; i > 0; --i)
-			{
-				_alloc.destroy(&_buff[i - 1]);
-			}
+			this->clear();
 			_alloc.deallocate(_buff, _capacity);
 		}
 		Vector<T,Allocator>& operator=(const Vector<T,Allocator>& x){
@@ -120,10 +115,32 @@ namespace ft
 		// 23.2.4.2 capacity:
 		size_t size() const {return this->_size;}
 		size_t max_size() const{return std::numeric_limits<std::size_t>::max() / sizeof(T);}
-		void resize(size_t sz, T c = T());
+		void resize(size_t sz, const T& val){
+			if (sz <= _size) 
+			{
+				while (sz < _size) 
+				{
+					_alloc.destroy(&_buff[_size - 1]);
+					_size--;
+				}
+			} 
+			else 
+			{
+				if (sz > _capacity) 
+				{
+					reserve(_capacity ? _capacity * 2 : 1);
+				}
+				for (size_t i = _size; i < sz; i++) {
+					_alloc.construct(_buff + i, val);
+				}
+			}
+			_size = sz;
+		}
 		size_t capacity() const {return this->_capacity;}
 		bool empty() const {return (_size == 0);}
 		void reserve(size_t n){
+			if (n > this->max_size())
+				throw std::length_error("vector");
 			if (n <= _capacity) 
 				return;
 			T* newData = _alloc.allocate(n);
@@ -136,26 +153,16 @@ namespace ft
 			_capacity = n;
 		}
 		// element access:
-		reference operator[](size_t n)
-		{
-			// if (n >= _size)
-			// 	throw std::out_of_range("Index is out of range");
-			return _buff[n];
-		}
-		const_reference operator[](size_t n) const
-		{
-			// if (n >= _size)
-			// 	throw std::out_of_range("Index is out of range");
-			return _buff[n];
-		}
+		reference operator[](size_t n) {return _buff[n];}
+		const_reference operator[](size_t n) const {return _buff[n];}
 		const_reference at(size_t n) const{
 			if (n >= _size)
-				throw std::out_of_range("Vector::at() - index out of range");
+				throw std::out_of_range("vector");
     		return (*this)[n];
 		}
 		reference at(size_t n){
 			if (n >= _size)
-				throw std::out_of_range("Vector::at() - index out of range");
+				throw std::out_of_range("vector");
     		return (*this)[n];
 		}
 		reference front() {return _buff[0];}

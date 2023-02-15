@@ -6,7 +6,7 @@
 /*   By: fstitou <fstitou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/16 00:38:26 by fstitou           #+#    #+#             */
-/*   Updated: 2023/02/15 02:06:23 by fstitou          ###   ########.fr       */
+/*   Updated: 2023/02/15 23:28:04 by fstitou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,9 +107,25 @@ int main()
     sv3.push_back(22);
     sv3.push_back(2);
     sv3.push_back(8);
+    std::cout << "-------------------------------------" <<std::endl;
+    std::cout << "-----------resize-----------------" <<std::endl;
+
+    std::cout << "before my "<<v3.capacity() << " | " << v3.size() << std::endl;
+    std::cout << "before sys "<<sv3.capacity() << " | " << sv3.size() << std::endl;
+
+    v3.resize(2, 11);
+    sv3.resize(2, 11);
+
+    std::cout << "my "<<v3.capacity() << " | " << v3.size() << std::endl;
+    std::cout << "sys "<<sv3.capacity() << " | " << sv3.size() << std::endl;
+
+    for (size_t i = 0; i < v3.size(); i++)
+        std::cout << "my : "<< v3[i] << std::endl;
+    std::cout << "-------------------------------------" <<std::endl;
+    std::cout << "-------------------------------------" <<std::endl;
+    for (size_t i = 0; i < sv3.size(); i++)
+         std::cout << "sys : "<< sv3[i] << std::endl;
     
-    v3.get_allocator();
-    sv3.get_allocator();
     // std::cout << "my : "<< v3.size() << " | "<<v3.capacity() << " | " << v3[0]<<std::endl;
     // std::cout << "sys : "<< sv3.size() << " | "<<sv3.capacity() << " | " << sv3[0]<<std::endl;
     
