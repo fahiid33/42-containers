@@ -6,7 +6,7 @@
 /*   By: fstitou <fstitou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/16 00:35:46 by fstitou           #+#    #+#             */
-/*   Updated: 2023/02/14 03:43:12 by fstitou          ###   ########.fr       */
+/*   Updated: 2023/02/15 02:07:46 by fstitou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ namespace ft
 			_capacity = 0;
 			_buff = NULL;
 			_alloc = Allocator();
-			std::cout << "Vector constr called"<< std::endl;
+			// std::cout << "Vector constr called"<< std::endl;
 		}
 		explicit Vector(const Vector& v)
 		{
@@ -77,13 +77,37 @@ namespace ft
 		// Vector(const Vector<T,Allocator>& x);
 		~Vector()
 		{
-			// std::cout << "destructor called\n";
+			for (size_t i = _size; i > 0; --i)
+			{
+				_alloc.destroy(&_buff[i - 1]);
+			}
+			_alloc.deallocate(_buff, _capacity);
 		}
-		Vector<T,Allocator>& operator=(const Vector<T,Allocator>& x);
+		Vector<T,Allocator>& operator=(const Vector<T,Allocator>& x){
+			if (this != &x)
+			{
+				_alloc = x._alloc;
+				_capacity = x._capacity;
+				_size = x._size;
+				if (_buff)
+				{
+					_alloc.deallocate(_buff, _capacity);
+				}
+				_buff = _alloc.allocate(_capacity);
+				for (size_t i = 0; i < _size; i++)
+				{
+					_alloc.construct(&_buff[i], x._buff[i]);
+				}
+			}
+    		return *this;
+		}
 		template <class InputIterator>
 		void assign(InputIterator first, InputIterator last);
-		void assign(size_t n, const T& u);
-		allocator_type get_allocator() const;
+		void assign(size_t n, const T& u){
+			Vector<T, Allocator> temp(n, u);
+			this->swap(temp);
+		}
+		allocator_type get_allocator() const {return Allocator();}
 		//iterators:
 		// iterator begin();
 		// const_iterator begin() const;
@@ -124,12 +148,20 @@ namespace ft
 			// 	throw std::out_of_range("Index is out of range");
 			return _buff[n];
 		}
-		const_reference at(size_t n) const;
-		reference at(size_t n);
-		reference front();
-		const_reference front() const;
-		reference back();
-		const_reference back() const;
+		const_reference at(size_t n) const{
+			if (n >= _size)
+				throw std::out_of_range("Vector::at() - index out of range");
+    		return (*this)[n];
+		}
+		reference at(size_t n){
+			if (n >= _size)
+				throw std::out_of_range("Vector::at() - index out of range");
+    		return (*this)[n];
+		}
+		reference front() {return _buff[0];}
+		const_reference front() const {return _buff[0];}
+		reference back() {return _buff[_size - 1];}
+		const_reference back() const {return _buff[_size - 1];}
 		//  modifiers:
 		void push_back(const T& val){
 			if (_size == _capacity)
@@ -137,7 +169,13 @@ namespace ft
 			_alloc.construct(_buff + _size, val);
 			++_size;
 		}
-		void pop_back();
+		void pop_back(){
+			if (_size > 0)
+			{
+				_alloc.destroy(&_buff[_size - 1]);
+				--_size;
+			}
+		}
 		// iterator insert(iterator position, const T& x);
 		// void insert(iterator position, size_t n, const T& x);
 		// template <class InputIterator>
@@ -145,8 +183,27 @@ namespace ft
 		// InputIterator first, InputIterator last);
 		// iterator erase(iterator position);
 		// iterator erase(iterator first, iterator last);
-		void swap(Vector<T,Allocator>&);
-		void clear();
+		void swap(Vector<T,Allocator>& rhs){
+			if (this != &rhs)
+			{
+				 size_t tmp_size = _size;
+				_size = rhs._size;
+				rhs._size = tmp_size;
+
+				size_t tmp_capacity = _capacity;
+				_capacity = rhs._capacity;
+				rhs._capacity = tmp_capacity;
+
+				pointer tmp_buff = _buff;
+				_buff = rhs._buff;
+				rhs._buff = tmp_buff;
+			}
+		}
+		void clear(){
+			for (size_t i = 0; i < _size; i++)
+				_alloc.destroy(&_buff[i]);
+			_size = 0;
+		}
 	private:
 		Allocator _alloc;
 		size_t _size;
