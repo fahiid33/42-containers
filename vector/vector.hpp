@@ -6,7 +6,7 @@
 /*   By: fstitou <fstitou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/16 00:35:46 by fstitou           #+#    #+#             */
-/*   Updated: 2023/02/16 02:58:25 by fstitou          ###   ########.fr       */
+/*   Updated: 2023/02/16 03:57:36 by fstitou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,14 +30,14 @@ namespace ft
 	{
 	public:
 	//typedefs:
+		typedef T value_type;
+		typedef Allocator allocator_type;
 		typedef typename Allocator::reference reference;
 		typedef typename Allocator::const_reference const_reference;
 		typedef ft::VectorIterator<value_type>					iterator;
         typedef ft::VectorIterator<const value_type>			const_iterator;
 		// typedef implementation defined size_t;
 		// typedef implementation defined difference_type
-		typedef T value_type;
-		typedef Allocator allocator_type;
 		typedef typename Allocator::pointer pointer;
 		typedef typename Allocator::const_pointer const_pointer;
 		// typedef std::reverse_iterator<iterator> reverse_iterator;
@@ -104,10 +104,10 @@ namespace ft
 		}
 		allocator_type get_allocator() const {return Allocator();}
 		//iterators:
-		iterator begin() {return iterator(_buff[0]) ;}
-		const_iterator begin() const {return iterator(_buff[0]) ;}
-		iterator end() {return iterator(_buff[_size]) ;}
-		const_iterator end() const  {return iterator(_buff[_size]) ;}
+		iterator begin() {return iterator(&_buff[0]) ;}
+		const_iterator begin() const {return iterator(&_buff[0]) ;}
+		iterator end() {return iterator(&_buff[_size]) ;}
+		const_iterator end() const  {return iterator(&_buff[_size]) ;}
 		// reverse_iterator rbegin();
 		// const_reverse_iterator rbegin() const;
 		// reverse_iterator rend();
@@ -220,3 +220,5 @@ namespace ft
 };
 
 #endif
+
+

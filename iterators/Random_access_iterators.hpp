@@ -6,7 +6,7 @@
 /*   By: fstitou <fstitou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/08 23:55:24 by fstitou           #+#    #+#             */
-/*   Updated: 2023/02/16 03:31:23 by fstitou          ###   ########.fr       */
+/*   Updated: 2023/02/16 03:51:46 by fstitou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,11 +31,11 @@ namespace ft
 
             VectorIterator() : _ptr(nullptr) {}
             VectorIterator(pointer ptr) : _ptr(ptr) {}
-            VectorIterator(const VectorIterator& other) : _ptr(other._ptr) {}
+            VectorIterator(const VectorIterator& other) : _ptr(other.base()) {}
 
             VectorIterator& operator=(const VectorIterator& other)
             {
-                _ptr = other._ptr;
+                _ptr = other.base();
                 return *this;
             }
 

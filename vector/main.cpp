@@ -6,7 +6,7 @@
 /*   By: fstitou <fstitou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/16 00:38:26 by fstitou           #+#    #+#             */
-/*   Updated: 2023/02/16 03:01:04 by fstitou          ###   ########.fr       */
+/*   Updated: 2023/02/16 03:58:43 by fstitou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,21 @@
 
 int main()
 {
-    ft::Vector <int>v;
+    ft::Vector<int>::iterator it;
+    ft::Vector<int>v;
+    v.push_back(5);
+    v.push_back(12);
+    v.push_back(13);
+    v.push_back(1);
+    it = v.begin();
+    it++;
+    it--;
+    while (it != v.end())
+    {
+        std::cout << *it << std::endl;
+        it++;
+    }
+    
 //     ft::Vector <int> ve;
 //   ft::Vector <int> v;
 //     std::vector <int> sve;
