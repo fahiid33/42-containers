@@ -6,7 +6,7 @@
 /*   By: fstitou <fstitou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/16 00:35:46 by fstitou           #+#    #+#             */
-/*   Updated: 2023/02/15 23:24:13 by fstitou          ###   ########.fr       */
+/*   Updated: 2023/02/16 01:39:57 by fstitou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 #include <iostream>
 #include <iterator>
 #include <algorithm>
-
+#include "../iterators/Random_access_iterators.hpp"
 
 
 
@@ -104,9 +104,9 @@ namespace ft
 		}
 		allocator_type get_allocator() const {return Allocator();}
 		//iterators:
-		// iterator begin();
+		// iterator begin() {return VectorIterator(_buff[0]) ;}
 		// const_iterator begin() const;
-		// iterator end();
+		// iterator end() {return VectorIterator(_buff[_size]) ;}
 		// const_iterator end() const;
 		// reverse_iterator rbegin();
 		// const_reverse_iterator rbegin() const;
