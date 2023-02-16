@@ -6,7 +6,7 @@
 /*   By: fstitou <fstitou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/16 00:35:46 by fstitou           #+#    #+#             */
-/*   Updated: 2023/02/16 04:22:12 by fstitou          ###   ########.fr       */
+/*   Updated: 2023/02/16 10:00:48 by fstitou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -183,13 +183,57 @@ namespace ft
 				--_size;
 			}
 		}
-		// iterator insert(iterator position, const T& x);
-		// void insert(iterator position, size_t n, const T& x);
+		iterator insert(iterator position, const T& x){
+			if (_size == _capacity)
+				reserve(_capacity ? _capacity * 2 : 1);
+			for (size_t i = _size; i > position - _buff; i--)
+			{
+				_alloc.construct(_buff + i, _buff[i - 1]);
+				_alloc.destroy(_buff + i - 1);
+			}
+			_alloc.construct(_buff + position - _buff, x);
+			_size++;
+			return position;
+		}
+		void insert(iterator position, size_t n, const T& x){
+			if (n == 0)
+				return;
+			if (n > _capacity - _size)
+				reserve(_capacity ? _capacity * 2 : 1);
+			for (size_t i = _size; i > position - _buff; i--)
+			{
+				_alloc.construct(_buff + i + n - 1, _buff[i - 1]);
+				_alloc.destroy(_buff + i - 1);
+			}
+			for (size_t i = 0; i < n; i++)
+			{
+				_alloc.construct(_buff + position - _buff + i, x);
+			}
+			_size += n;
+		}
 		// template <class InputIterator>
 		// void insert(iterator position,
 		// InputIterator first, InputIterator last);
-		// iterator erase(iterator position);
-		// iterator erase(iterator first, iterator last);
+		iterator erase(iterator position){
+			_alloc.destroy(position);
+			for (size_t i = position - _buff; i < _size - 1; i++)
+			{
+				_alloc.construct(_buff + i, _buff[i + 1]);
+				_alloc.destroy(_buff + i + 1);
+			}
+			_size--;
+			return position;
+		}
+		iterator erase(iterator first, iterator last){
+			size_t n = last - first;
+			for (size_t i = first - _buff; i < _size - n; i++)
+			{
+				_alloc.construct(_buff + i, _buff[i + n]);
+				_alloc.destroy(_buff + i + n);
+			}
+			_size -= n;
+			return first;
+		}
 		void swap(Vector<T,Allocator>& rhs){
 			if (this != &rhs)
 			{

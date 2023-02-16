@@ -6,7 +6,7 @@
 /*   By: fstitou <fstitou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 09:37:12 by fstitou           #+#    #+#             */
-/*   Updated: 2023/02/16 09:46:07 by fstitou          ###   ########.fr       */
+/*   Updated: 2023/02/16 09:47:48 by fstitou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,27 +30,27 @@ namespace ft
      	reverse_iterator () : _curr() {}
      	reverse_iterator (iterator_type x) : _curr(x) {} 
      	reverse_iterator (const reverse_iterator &x) : _curr(x._curr) {}
-    template<typename Iter>  	reverse_iterator (const reverse_iterator< Iter > &x) {*this = x;}
-    iterator_type 	base () const {return _curr;}
-    reference 	operator * () const 
-    pointer 	operator-> () const 
-    reverse_iterator & 	operator++ () 
-    reverse_iterator 	operator++ (int) 
-    reverse_iterator & 	operator-- () 
-    reverse_iterator 	operator-- (int) 
-    reverse_iterator 	operator+ (difference_type n) const 
-    reverse_iterator & 	operator+= (difference_type n) 
-    reverse_iterator 	operator- (difference_type n) const 
-    reverse_iterator & 	operator-= (difference_type n) 
-    reference 	operator[] (difference_type n) const 
-    template<typename Iter>  	bool 	operator== (const reverse_iterator<Iter> &x, const reverse_iterator<Iter> &y)
-    template<typename Iter>  	bool 	operator!= (const reverse_iterator<Iter> &x, const reverse_iterator<Iter> &y)
-    template<typename Iter>  	bool 	operator< (const reverse_iterator<Iter> &x, const reverse_iterator<Iter> &y)
-    template<typename Iter>  	bool 	operator<= (const reverse_iterator<Iter> &x, const reverse_iterator<Iter> &y)
-    template<typename Iter>  	bool 	operator> (const reverse_iterator<Iter> &x, const reverse_iterator<Iter> &y)
-    template<typename Iter>  	bool 	operator>= (const reverse_iterator<Iter> &x, const reverse_iterator<Iter> &y)
-    template<typename Iter>  	reverse_iterator<Iter> 	operator+ (typename reverse_iterator<Iter>::difference_type n, const reverse_iterator<Iter> &x)
-    template<typename Iter>  	typename reverse_iterator<Iter>::difference_type 	operator- (const reverse_iterator<Iter> &x, const reverse_iterator<Iter> &y)
+        template<typename Iter>  	reverse_iterator (const reverse_iterator< Iter > &x) {*this = x;}
+        iterator_type 	base () const {return _curr;}
+        reference 	operator * () const 
+        pointer 	operator-> () const 
+        reverse_iterator & 	operator++ () 
+        reverse_iterator 	operator++ (int) 
+        reverse_iterator & 	operator-- () 
+        reverse_iterator 	operator-- (int) 
+        reverse_iterator 	operator+ (difference_type n) const 
+        reverse_iterator & 	operator+= (difference_type n) 
+        reverse_iterator 	operator- (difference_type n) const 
+        reverse_iterator & 	operator-= (difference_type n) 
+        reference 	operator[] (difference_type n) const 
+        template<typename Iter>  	bool 	operator== (const reverse_iterator<Iter> &x, const reverse_iterator<Iter> &y)
+        template<typename Iter>  	bool 	operator!= (const reverse_iterator<Iter> &x, const reverse_iterator<Iter> &y)
+        template<typename Iter>  	bool 	operator< (const reverse_iterator<Iter> &x, const reverse_iterator<Iter> &y)
+        template<typename Iter>  	bool 	operator<= (const reverse_iterator<Iter> &x, const reverse_iterator<Iter> &y)
+        template<typename Iter>  	bool 	operator> (const reverse_iterator<Iter> &x, const reverse_iterator<Iter> &y)
+        template<typename Iter>  	bool 	operator>= (const reverse_iterator<Iter> &x, const reverse_iterator<Iter> &y)
+        template<typename Iter>  	reverse_iterator<Iter> 	operator+ (typename reverse_iterator<Iter>::difference_type n, const reverse_iterator<Iter> &x)
+        template<typename Iter>  	typename reverse_iterator<Iter>::difference_type 	operator- (const reverse_iterator<Iter> &x, const reverse_iterator<Iter> &y)
     private:
         iterator_type 	_curr;
 }
