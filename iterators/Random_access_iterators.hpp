@@ -6,7 +6,7 @@
 /*   By: fstitou <fstitou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/08 23:55:24 by fstitou           #+#    #+#             */
-/*   Updated: 2023/02/16 00:52:57 by fstitou          ###   ########.fr       */
+/*   Updated: 2023/02/16 03:31:23 by fstitou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 #define RANDOM_ACCESS_ITERATORS_HPP
 
 #include <cstddef>
+#include <iterator>
+#include "iterators_traits.hpp"
 
 namespace ft
 {
@@ -21,11 +23,11 @@ namespace ft
     class VectorIterator
     {
         public:
-            typedef T value_type;
-            typedef T* pointer;
-            typedef T& reference;
-            typedef std::random_access_iterator_tag iterator_category;
-            typedef std::ptrdiff_t difference_type;
+            typedef typename ft::iterator<std::random_access_iterator_tag, T>::difference_type	    difference_type;
+            typedef typename ft::iterator<std::random_access_iterator_tag, T>::value_type		    value_type;
+            typedef typename ft::iterator<std::random_access_iterator_tag, T>::pointer			    pointer;
+            typedef typename ft::iterator<std::random_access_iterator_tag, T>::reference			reference;
+            typedef typename ft::iterator<std::random_access_iterator_tag, T>::iterator_category	iterator_category;
 
             VectorIterator() : _ptr(nullptr) {}
             VectorIterator(pointer ptr) : _ptr(ptr) {}
@@ -92,6 +94,9 @@ namespace ft
             bool operator>=(const VectorIterator& other) const { return _ptr >= other._ptr; }
 
             pointer base() const { return _ptr; }
+            operator VectorIterator<const T>() const {
+                return VectorIterator<const T>(_ptr);
+            }
 
     private:
         pointer _ptr;
