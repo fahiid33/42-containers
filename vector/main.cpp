@@ -6,7 +6,7 @@
 /*   By: fstitou <fstitou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/16 00:38:26 by fstitou           #+#    #+#             */
-/*   Updated: 2023/02/16 03:58:43 by fstitou          ###   ########.fr       */
+/*   Updated: 2023/02/16 04:24:17 by fstitou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,20 +16,130 @@
 
 int main()
 {
-    ft::Vector<int>::iterator it;
-    ft::Vector<int>v;
+    ft::Vector<int> my_v;
+    my_v.push_back(5);
+    my_v.push_back(12);
+    my_v.push_back(13);
+    my_v.push_back(1);
+  // Define a regular iterator for the vector.
+    ft::Vector<int>::iterator it = my_v.begin();
+
+    // Increment the iterator and print the value it points to.
+    ++it;
+    std::cout << "Regular iterator value: " << *it << std::endl;
+
+    // Define a const iterator for the Vector.
+    ft::Vector<int>::const_iterator const_it = my_v.cbegin();
+
+    // Increment the const iterator and print the value it points to.
+    ++const_it;
+    std::cout << "Const iterator value: " << *const_it << std::endl;
+
+  // Try to modify the value using the const iterator.
+  // This will result in a compiler error.
+    // *const_it = 10;
+    std::cout << "-------system------------" << std::endl;
+  
+    std::vector<int> v;
     v.push_back(5);
     v.push_back(12);
     v.push_back(13);
     v.push_back(1);
-    it = v.begin();
-    it++;
-    it--;
-    while (it != v.end())
-    {
-        std::cout << *it << std::endl;
-        it++;
-    }
+
+    // Define a regular iterator for the vector.
+    std::vector<int>::iterator its = v.begin();
+
+    // Increment the iterator and print the value it points to.
+    ++its;
+    std::cout << "Regular iterator value: " << *its << std::endl;
+
+    // Define a const iterator for the vector.
+    std::vector<int>::const_iterator const_its = v.cbegin();
+
+    // Increment the const iterator and print the value it points to.
+    ++const_its;
+    std::cout << "Const iterator value: " << *const_its << std::endl;
+
+    
+//   Try to modify the value using the const iterator.
+//   This will result in a compiler error.
+    // *const_it = 10;
+
+  
+    // ft::Vector<int>::iterator it;
+    // ft::Vector<int>::iterator it1;
+    // ft::Vector<int>v;
+    // ft::Vector<int>v1;
+    // v.push_back(5);
+    // v.push_back(12);
+    // v.push_back(13);
+    // v.push_back(1);
+
+    // v1.push_back(1);
+    // v1.push_back(3);
+    // v1.push_back(16);
+    // v1.push_back(10);
+    // it = v.begin();
+    // it1 = v1.begin();
+    // it++;
+    // it--;
+    // // while (it != v.end())
+    // // {
+    // //     std::cout << *it << std::endl;
+    // //     it++;
+    // // }
+    // std::cout << "-------------------" << std::endl;
+    // it = it1;
+    // it1 = v.begin();
+    // while (it != v1.end())
+    // {
+    //     std::cout << *it << std::endl;
+    //     it++;
+    // }
+    // std::cout << "-------------------" << std::endl;
+    // while (it1 != v1.end())
+    // {
+    //     std::cout << *it1 << std::endl;
+    //     it1++;
+    // }
+    // std::cout << "-------system------------" << std::endl;
+
+    // std::vector<int>::iterator its;
+    // std::vector<int>::iterator it1s;
+    // std::vector<int>vs;
+    // std::vector<int>v1s;
+    // vs.push_back(5);
+    // vs.push_back(12);
+    // vs.push_back(13);
+    // vs.push_back(1);
+
+    // v1s.push_back(1);
+    // v1s.push_back(3);
+    // v1s.push_back(16);
+    // v1s.push_back(10);
+    // its = vs.begin();
+    // it1s = v1s.begin();
+    // its++;
+    // its--;
+    // // while (it != v.end())
+    // // {
+    // //     std::cout << *it << std::endl;
+    // //     it++;
+    // // }
+    // std::cout << "-------------------" << std::endl;
+    // its = it1s;
+    // it1s = vs.begin();
+    // while (its != v1s.end())
+    // {
+    //     std::cout << *its << std::endl;
+    //     its++;
+    // }
+    // std::cout << "-------------------" << std::endl;
+    // while (it1s != v1s.end())
+    // {
+    //     std::cout << *it1s << std::endl;
+    //     it1s++;
+    // }
     
 //     ft::Vector <int> ve;
 //   ft::Vector <int> v;

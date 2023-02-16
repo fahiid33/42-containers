@@ -6,7 +6,7 @@
 /*   By: fstitou <fstitou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/08 23:55:24 by fstitou           #+#    #+#             */
-/*   Updated: 2023/02/16 03:51:46 by fstitou          ###   ########.fr       */
+/*   Updated: 2023/02/16 04:14:39 by fstitou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ namespace ft
 
             VectorIterator& operator=(const VectorIterator& other)
             {
-                _ptr = other.base();
+                _ptr = other._ptr;
                 return *this;
             }
 

@@ -6,7 +6,7 @@
 /*   By: fstitou <fstitou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/16 00:35:46 by fstitou           #+#    #+#             */
-/*   Updated: 2023/02/16 03:57:36 by fstitou          ###   ########.fr       */
+/*   Updated: 2023/02/16 04:22:12 by fstitou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,9 +105,9 @@ namespace ft
 		allocator_type get_allocator() const {return Allocator();}
 		//iterators:
 		iterator begin() {return iterator(&_buff[0]) ;}
-		const_iterator begin() const {return iterator(&_buff[0]) ;}
+		const_iterator cbegin() const {return iterator(&_buff[0]) ;}
 		iterator end() {return iterator(&_buff[_size]) ;}
-		const_iterator end() const  {return iterator(&_buff[_size]) ;}
+		const_iterator cend() const  {return iterator(&_buff[_size]) ;}
 		// reverse_iterator rbegin();
 		// const_reverse_iterator rbegin() const;
 		// reverse_iterator rend();
