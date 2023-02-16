@@ -6,59 +6,127 @@
 /*   By: fstitou <fstitou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/16 00:38:26 by fstitou           #+#    #+#             */
-/*   Updated: 2023/02/16 04:24:17 by fstitou          ###   ########.fr       */
+/*   Updated: 2023/02/16 11:07:22 by fstitou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "vector.hpp"
 #include "../iterators/Random_access_iterators.hpp"
 #include <vector>
+#include <iostream>
 
 int main()
 {
-    ft::Vector<int> my_v;
-    my_v.push_back(5);
-    my_v.push_back(12);
-    my_v.push_back(13);
-    my_v.push_back(1);
-  // Define a regular iterator for the vector.
-    ft::Vector<int>::iterator it = my_v.begin();
+    std::vector<int> myvector (3,100);
+    std::vector<int>::iterator it;
+    
+    std::cout << "myvector contains:";
+    for (it=myvector.begin(); it<myvector.end(); it++)
+      std::cout << ' ' << *it;
+    
+    it = myvector.begin();
+    it = myvector.insert ( it , 200 );
+    std::cout << "\nafter insert ( it , 200 ) : ";
+    for (it=myvector.begin(); it<myvector.end(); it++)
+      std::cout << ' ' << *it;
+    std::cout << "\nafter insert (it,2,300) : ";
+    myvector.insert (it,2,300);
+    for(it = myvector.begin(); it < myvector.end(); it++)
+        std::cout << ' ' << *it;
+    it = myvector.begin();
 
-    // Increment the iterator and print the value it points to.
-    ++it;
-    std::cout << "Regular iterator value: " << *it << std::endl;
+    // std::vector<int> anothervector (2,400);
+    // std::cout << "\nanothervector contains: 400 400" ;
+    // myvector.insert (it+2,anothervector.begin(),anothervector.end());
 
-    // Define a const iterator for the Vector.
-    ft::Vector<int>::const_iterator const_it = my_v.cbegin();
+    // std::cout << "\nafter insert (it+2,anothervector.begin(),anothervector.end()) : ";
+    // for (it=anothervector.begin(); it<anothervector.end(); it++)
+    //   std::cout << ' ' << *it;
+    int myarray [] = { 501,502,503 };
+    myvector.insert(myvector.begin(), myarray, myarray+3);
 
-    // Increment the const iterator and print the value it points to.
-    ++const_it;
-    std::cout << "Const iterator value: " << *const_it << std::endl;
+    std::cout << "\n after insert(myvector.begin(), myarray, myarray+3): ";
+    for (it=myvector.begin(); it<myvector.end(); it++)
+      std::cout << ' ' << *it;
+    std::cout << '\n';
+    ////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////
+    std::cout << "-----------myvector tests-------------"<< std::endl;
+    ft::Vector<int> myVector (3,100);
+    ft::Vector<int>::iterator my_it;
+    
+    std::cout << "myvector contains:";
+    for (it=myvector.begin(); it<myvector.end(); it++)
+      std::cout << ' ' << *it;
+    
+    my_it = myVector.begin();
+    my_it = myVector.insert ( my_it , 200 );
+    std::cout << "\nafter insert ( it , 200 ) : ";
+    for (my_it=myVector.begin(); my_it<myVector.end(); my_it++)
+      std::cout << ' ' << *my_it;
+    std::cout << "\nafter insert (it,2,300) : ";
+    myVector.insert (my_it,2,300);
+    for(my_it = myVector.begin(); my_it < myVector.end(); my_it++)
+        std::cout << ' ' << *my_it;
+    my_it = myVector.begin();
 
-  // Try to modify the value using the const iterator.
-  // This will result in a compiler error.
-    // *const_it = 10;
-    std::cout << "-------system------------" << std::endl;
+    // ft::Vector<int> anotherVector (2,400);
+    // std::cout << "\nanothervector contains: 400 400" ;
+
+    // std::cout << "\nafter insert (my_it+2,anothervector.begin(),anothervector.end()) : ";
+    // for (my_it=anotherVector.begin(); my_it<anotherVector.end(); my_it++)
+    //   std::cout << ' ' << *my_it;
+    int Myarray [] = { 501,502,503 };
+    myvector.insert(myvector.begin(), Myarray, Myarray+3);
+
+    std::cout << "\n after insert(myvector.begin(), myarray, myarray+3): ";
+    for (my_it=myVector.begin(); my_it<myVector.end(); my_it++)
+      std::cout << ' ' << *my_it;
+    std::cout << '\n';
+
+  //   ft::Vector<int> my_v;
+  //   my_v.push_back(5);
+  //   my_v.push_back(12);
+  //   my_v.push_back(13);
+  //   my_v.push_back(1);
+  // // Define a regular iterator for the vector.
+  //   ft::Vector<int>::iterator it = my_v.begin();
+
+  //   // Increment the iterator and print the value it points to.
+  //   ++it;
+  //   std::cout << "Regular iterator value: " << *it << std::endl;
+
+  //   // Define a const iterator for the Vector.
+  //   ft::Vector<int>::const_iterator const_it = my_v.cbegin();
+
+  //   // Increment the const iterator and print the value it points to.
+  //   ++const_it;
+  //   std::cout << "Const iterator value: " << *const_it << std::endl;
+
+  // // Try to modify the value using the const iterator.
+  // // This will result in a compiler error.
+  //   // *const_it = 10;
+  //   std::cout << "-------system------------" << std::endl;
   
-    std::vector<int> v;
-    v.push_back(5);
-    v.push_back(12);
-    v.push_back(13);
-    v.push_back(1);
+  //   std::vector<int> v;
+  //   v.push_back(5);
+  //   v.push_back(12);
+  //   v.push_back(13);
+  //   v.push_back(1);
 
-    // Define a regular iterator for the vector.
-    std::vector<int>::iterator its = v.begin();
+  //   // Define a regular iterator for the vector.
+  //   std::vector<int>::iterator its = v.begin();
 
-    // Increment the iterator and print the value it points to.
-    ++its;
-    std::cout << "Regular iterator value: " << *its << std::endl;
+  //   // Increment the iterator and print the value it points to.
+  //   ++its;
+  //   std::cout << "Regular iterator value: " << *its << std::endl;
 
-    // Define a const iterator for the vector.
-    std::vector<int>::const_iterator const_its = v.cbegin();
+  //   // Define a const iterator for the vector.
+  //   std::vector<int>::const_iterator const_its = v.cbegin();
 
-    // Increment the const iterator and print the value it points to.
-    ++const_its;
-    std::cout << "Const iterator value: " << *const_its << std::endl;
+  //   // Increment the const iterator and print the value it points to.
+  //   ++const_its;
+  //   std::cout << "Const iterator value: " << *const_its << std::endl;
 
     
 //   Try to modify the value using the const iterator.

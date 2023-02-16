@@ -6,7 +6,7 @@
 /*   By: fstitou <fstitou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/16 00:35:46 by fstitou           #+#    #+#             */
-/*   Updated: 2023/02/16 10:00:48 by fstitou          ###   ########.fr       */
+/*   Updated: 2023/02/16 11:05:53 by fstitou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,8 @@ namespace ft
 		typedef typename Allocator::const_reference const_reference;
 		typedef ft::VectorIterator<value_type>					iterator;
         typedef ft::VectorIterator<const value_type>			const_iterator;
-		// typedef implementation defined size_t;
-		// typedef implementation defined difference_type
+		typedef typename allocator_type::size_type					size_type;
+		typedef typename iterator_traits<iterator>::difference_type	difference_type;
 		typedef typename Allocator::pointer pointer;
 		typedef typename Allocator::const_pointer const_pointer;
 		// typedef std::reverse_iterator<iterator> reverse_iterator;
@@ -184,31 +184,32 @@ namespace ft
 			}
 		}
 		iterator insert(iterator position, const T& x){
-			if (_size == _capacity)
+			size_t len = 0;
+            if (position.base())
+                len = std::distance(begin(),position);
+			if (_size >= _capacity)
 				reserve(_capacity ? _capacity * 2 : 1);
-			for (size_t i = _size; i > position - _buff; i--)
+			for (size_t i = _size ; i > len ; i--)
 			{
-				_alloc.construct(_buff + i, _buff[i - 1]);
-				_alloc.destroy(_buff + i - 1);
+				_buff[i] = _buff[i - 1];
 			}
-			_alloc.construct(_buff + position - _buff, x);
-			_size++;
-			return position;
+			_buff[len] = x;
+			++_size;
+			return &_buff[len];
 		}
 		void insert(iterator position, size_t n, const T& x){
-			if (n == 0)
-				return;
-			if (n > _capacity - _size)
-				reserve(_capacity ? _capacity * 2 : 1);
-			for (size_t i = _size; i > position - _buff; i--)
+			size_type index = 0;
+			if (position.base())
+				index = std::distance(begin(), position);
+			if (_size + n > _capacity)
 			{
-				_alloc.construct(_buff + i + n - 1, _buff[i - 1]);
-				_alloc.destroy(_buff + i - 1);
+				reserve(n > _size ? n + _size : _capacity * 2);
 			}
-			for (size_t i = 0; i < n; i++)
-			{
-				_alloc.construct(_buff + position - _buff + i, x);
+			for (size_type i = _size; i > index; i--){
+				_alloc.construct(&_buff[i + n - 1], _buff[i - 1]);
 			}
+			for (size_type i = index; i < index + n; i++)
+				_alloc.construct(&_buff[i], x);
 			_size += n;
 		}
 		// template <class InputIterator>
