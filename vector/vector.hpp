@@ -6,7 +6,7 @@
 /*   By: fstitou <fstitou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/16 00:35:46 by fstitou           #+#    #+#             */
-/*   Updated: 2023/02/17 01:02:46 by fstitou          ###   ########.fr       */
+/*   Updated: 2023/02/17 10:21:15 by fstitou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,8 +72,19 @@ namespace ft
 			this->_capacity = n;
 		}
 		template <class InputIterator>
-		Vector(InputIterator first, InputIterator last,
-		const Allocator& = Allocator());
+		Vector (InputIterator first, InputIterator last, const allocator_type& alloc = allocator_type()
+				,typename ft::enable_if<!ft::is_integral<InputIterator>::value, InputIterator>::type = InputIterator())
+		{
+			_size = 0;
+			_capacity = 0;
+			_buff = NULL;
+			_alloc = alloc;
+			while (first != last)
+			{
+				this->push_back(*first);
+				first++;
+			}
+		};
 		~Vector()
 		{
 			this->clear();
@@ -214,30 +225,48 @@ namespace ft
 			_size += n;
 		}
 		template <class InputIterator>
-		void insert(iterator position,
-		InputIterator first, InputIterator last)
+		void insert (iterator position, InputIterator first, InputIterator last,
+				typename ft::enable_if<!ft::is_integral<InputIterator>::value, InputIterator>::type = InputIterator())
 		{
-			size_t insert_size = std::distance(first, last);
-			if (position < begin() || position > end()) {
-				throw std::out_of_range("vector");
+			size_type index = 0;
+			if (position.base())
+				index = std::distance(begin(), position);
+			size_type n = std::distance(first, last);
+			if (_size + n > _capacity)
+			{
+				reserve(n > _size ? n + _size : _capacity * 2);
 			}
-			if (insert_size > capacity() - size()) {
-				reserve(size() + insert_size);
+			for (size_type i = _size; i > index; i--){
+				_alloc.construct(&_buff[i + n - 1], _buff[i - 1]);
 			}
-			size_t pos_index = position - begin();
-			if (size() - pos_index >= insert_size) {
-				std::uninitialized_copy(end() - insert_size, end(), end());
-				std::copy_backward(begin() + pos_index, end() - insert_size, end());
-				std::copy(first, last, begin() + pos_index);
-			} else {
-				InputIterator mid = first;
-				std::advance(mid, size() - pos_index);
-				std::uninitialized_copy(mid, last, end());
-				std::copy_backward(begin() + pos_index, end() - (insert_size - (size() - pos_index)), end());
-				std::copy(first, mid, begin() + pos_index);
-			}
-			_size += insert_size;
+			for (size_type i = index; i < index + n; i++)
+				_alloc.construct(&_buff[i], *first++);
+			_size += n;
 		}
+		// void insert(iterator position,
+		// InputIterator first, InputIterator last)
+		// {
+		// 	size_t insert_size = std::distance(first, last);
+		// 	if (position < begin() || position > end()) {
+		// 		throw std::out_of_range("vector");
+		// 	}
+		// 	if (insert_size > capacity() - size()) {
+		// 		reserve(size() + insert_size);
+		// 	}
+		// 	size_t pos_index = position - begin();
+		// 	if (size() - pos_index >= insert_size) {
+		// 		std::uninitialized_copy(end() - insert_size, end(), end());
+		// 		std::copy_backward(begin() + pos_index, end() - insert_size, end());
+		// 		std::copy(first, last, begin() + pos_index);
+		// 	} else {
+		// 		InputIterator mid = first;
+		// 		std::advance(mid, size() - pos_index);
+		// 		std::uninitialized_copy(mid, last, end());
+		// 		std::copy_backward(begin() + pos_index, end() - (insert_size - (size() - pos_index)), end());
+		// 		std::copy(first, mid, begin() + pos_index);
+		// 	}
+		// 	_size += insert_size;
+		// }
 		// iterator erase(iterator position){
 		// 	pointer here = &(*position);
 			
@@ -323,6 +352,7 @@ namespace ft
 		size_t _capacity;
 		pointer _buff;
 	};
+//////////////////// non-member function overloads ////////////////////////////
 ////////////////--vector comparison operators--////////////////////
 
 template <class T, class Alloc>
