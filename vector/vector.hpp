@@ -6,7 +6,7 @@
 /*   By: fstitou <fstitou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/16 00:35:46 by fstitou           #+#    #+#             */
-/*   Updated: 2023/02/17 10:21:15 by fstitou          ###   ########.fr       */
+/*   Updated: 2023/02/17 11:26:46 by fstitou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 #include <iterator>
 #include <algorithm>
 #include "../iterators/Random_access_iterators.hpp"
+#include "../iterators/reverse_iterator.hpp"
 #include "../iterators/utilities.hpp"
 
 
@@ -41,8 +42,8 @@ namespace ft
 		typedef typename iterator_traits<iterator>::difference_type	difference_type;
 		typedef typename Allocator::pointer pointer;
 		typedef typename Allocator::const_pointer const_pointer;
-		// typedef std::reverse_iterator<iterator> reverse_iterator;
-		// typedef std::reverse_iterator<const_iterator> const_reverse_iterator;
+		typedef ft::reverse_iterator<iterator> reverse_iterator;
+		typedef ft::reverse_iterator<const_iterator> const_reverse_iterator;
 		// construct/copy/destroy:
 		explicit Vector()
 		{
@@ -120,10 +121,10 @@ namespace ft
 		const_iterator begin() const {return const_iterator(&_buff[0]) ;}
 		iterator end() {return iterator(&_buff[_size]) ;}
 		const_iterator end() const  {return const_iterator(&_buff[_size]) ;}
-		// reverse_iterator rbegin();
-		// const_reverse_iterator rbegin() const;
-		// reverse_iterator rend();
-		// const_reverse_iterator rend() const;
+		reverse_iterator rbegin() {return reverse_iterator(this->end());}
+		const_reverse_iterator rbegin() const {return const_reverse_iterator(this->end());}
+		reverse_iterator rend() {return reverse_iterator(this->begin());}
+		const_reverse_iterator rend() const {return const_reverse_iterator(this->begin());}
 		// 23.2.4.2 capacity:
 		size_t size() const {return this->_size;}
 		size_t max_size() const{return std::numeric_limits<std::size_t>::max() / sizeof(T);}
@@ -243,88 +244,30 @@ namespace ft
 				_alloc.construct(&_buff[i], *first++);
 			_size += n;
 		}
-		// void insert(iterator position,
-		// InputIterator first, InputIterator last)
-		// {
-		// 	size_t insert_size = std::distance(first, last);
-		// 	if (position < begin() || position > end()) {
-		// 		throw std::out_of_range("vector");
-		// 	}
-		// 	if (insert_size > capacity() - size()) {
-		// 		reserve(size() + insert_size);
-		// 	}
-		// 	size_t pos_index = position - begin();
-		// 	if (size() - pos_index >= insert_size) {
-		// 		std::uninitialized_copy(end() - insert_size, end(), end());
-		// 		std::copy_backward(begin() + pos_index, end() - insert_size, end());
-		// 		std::copy(first, last, begin() + pos_index);
-		// 	} else {
-		// 		InputIterator mid = first;
-		// 		std::advance(mid, size() - pos_index);
-		// 		std::uninitialized_copy(mid, last, end());
-		// 		std::copy_backward(begin() + pos_index, end() - (insert_size - (size() - pos_index)), end());
-		// 		std::copy(first, mid, begin() + pos_index);
-		// 	}
-		// 	_size += insert_size;
-		// }
-		// iterator erase(iterator position){
-		// 	pointer here = &(*position);
-			
-		// 	_alloc.destroy(position);
-		// 	for (size_t i = position - _buff; i < _size - 1; i++)
-		// 	{
-		// 		_alloc.construct(_buff + i, _buff[i + 1]);
-		// 		_alloc.destroy(_buff + i + 1);
-		// 	}
-		// 	_size--;
-		// 	return position;
-		// }
-		// iterator erase(iterator first, iterator last){
-		// 	size_t n = last - first;
-		// 	for (size_t i = first - _buff; i < _size - n; i++)
-		// 	{
-		// 		_alloc.construct(_buff + i, _buff[i + n]);
-		// 		_alloc.destroy(_buff + i + n);
-		// 	}
-		// 	_size -= n;
-		// 	return first;
-		// }
-
-
-			iterator erase (iterator position)
+		iterator erase(iterator first, iterator last){
+			size_t n = last - first;
+			for (size_t i = first - _buff; i < _size - n; i++)
 			{
-				pointer here = &(*position);
-				if(position + 1 != (this->_buff + _size))
+				_alloc.construct(_buff + i, _buff[i + n]);
+				_alloc.destroy(_buff + i + n);
+			}
+			_size -= n;
+			return first;
+		}
+		iterator erase (iterator position)
+		{
+			pointer here = &(*position);
+			if(position + 1 != (this->_buff + _size))
+			{
+				this->_alloc.destroy(here);
+				for (long i = 0; i < (this->_buff + _size) - here - 1; i++)
 				{
-					this->_alloc.destroy(here);
-					for (long i = 0; i < (this->_buff + _size) - here - 1; i++)
-					{
-						this->_alloc.construct(here + i, *(here + i + 1));
-					}		
-				}
-				pop_back();
-				return(iterator(here));
+					this->_alloc.construct(here + i, *(here + i + 1));
+				}		
 			}
-			
-			iterator erase (iterator first, iterator last)
-			{
-				pointer pos_first= &(*first);
-				pointer pos_last= &(*last);
-				size_type distance = pos_last - pos_first;
-				// size_type dist = _last - pos_last;
-				for (pointer i = pos_first; i < pos_last; i++)
-					this->_alloc.destroy(i);
-				for (long i = 0; i <(this->_buff + _size) - pos_last; i++)
-					this->_alloc.construct((pos_first + i), *(pos_last + i));
-				// for (size_t i = 0; i < _end - plast; i++)
-				// 	_alloc.destroy(_first + i);
-				for (size_t i = 0; i < distance; i++)//to check
-					pop_back();
-				return(iterator(pos_first));
-			}
-
-
-
+			pop_back();
+			return(iterator(here));
+		}
 		void swap(Vector<T,Allocator>& rhs){
 			if (this != &rhs)
 			{
