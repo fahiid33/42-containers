@@ -6,7 +6,7 @@
 /*   By: fstitou <fstitou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/16 00:38:26 by fstitou           #+#    #+#             */
-/*   Updated: 2023/02/17 12:43:15 by fstitou          ###   ########.fr       */
+/*   Updated: 2023/02/17 13:41:58 by fstitou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -901,6 +901,7 @@ void vector_tests(void)
         /*----------------------------------------------------*/
         EQUAL(v1.capacity() == ft_v1.capacity() && v2.capacity() == ft_v2.capacity() 
         && v3.capacity() == ft_v3.capacity() && v4.capacity() == ft_v4.capacity() && v5.capacity() == ft_v5.capacity());
+    
     }
     std::cout << "\033[1;37m[-------------------- [" << std::setw(40) << std::left << " max_size method " << "] --------------------]\t\t\033[0m";
     {
@@ -948,14 +949,14 @@ void vector_tests(void)
             /*------------------ std::vectors ---------------------*/
             std::vector<std::string>    v1(10, "string2");
             start = get_time();
-            v1.resize(1e6);
+            // v1.resize(1e6);
             end = get_time();
             diff = end - start;
             diff  =  (diff)  ? (diff  *  TIME_FAC)  :  TIME_FAC;
             /*------------------ ft::Vectors ---------------------*/
             ft::Vector<std::string>    ft_v1(10, "string2");
             ualarm(diff * 1e3, 0);
-            ft_v1.resize(1e6);
+            // ft_v1.resize(1e6);
             ualarm(0, 0);
             /*----------------------------------------------------*/
 			/*

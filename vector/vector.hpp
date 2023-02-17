@@ -6,7 +6,7 @@
 /*   By: fstitou <fstitou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/16 00:35:46 by fstitou           #+#    #+#             */
-/*   Updated: 2023/02/17 12:42:53 by fstitou          ###   ########.fr       */
+/*   Updated: 2023/02/17 13:46:07 by fstitou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,15 +76,22 @@ namespace ft
 		Vector (InputIterator first, InputIterator last, const allocator_type& alloc = allocator_type()
 				,typename ft::enable_if<!ft::is_integral<InputIterator>::value, InputIterator>::type = InputIterator())
 		{
-			_size = 0;
-			_capacity = 0;
-			_buff = NULL;
 			_alloc = alloc;
-			while (first != last)
+			size_type n = std::distance(first, last);
+			if (n == 0)
 			{
-				this->push_back(*first);
-				first++;
+				_buff = NULL;
+				_capacity = 0;
+				_size = 0;
+				return;
 			}
+			_buff = _alloc.allocate(n);
+			for (size_type i = 0; first != last; ++i, ++first)
+			{
+				_alloc.construct(_buff + i, *first);
+			}
+			_size = n;
+			_capacity = n;
 		};
 		~Vector()
 		{
@@ -133,24 +140,14 @@ namespace ft
 		size_t max_size() const{return ((std::numeric_limits<size_type>::max() / sizeof(T) ) / 2);}
 		void resize(size_t sz, const T& val = value_type())
 		{
-			if (sz > this->max_size())
-				throw std::length_error("vector");
-			if (sz <= _size)
-			{
-				while (sz < _size) 
-				{
-					_alloc.destroy(&_buff[_size - 1]);
-					_size--;
-				}
-			} 
-			else 
-			{
-				if (sz > _capacity) 
-				{
-					reserve(_capacity ? _capacity * 2 : 1);
-				}
+			 if (sz > _size) {
+				reserve(sz);
 				for (size_t i = _size; i < sz; i++) {
-					_alloc.construct(_buff + i, val);
+				_alloc.construct(_buff + i, val);
+				}
+			} else if (sz < _size) {
+				for (size_t i = sz; i < _size; i++) {
+				_alloc.destroy(_buff + i);
 				}
 			}
 			_size = sz;
@@ -190,7 +187,7 @@ namespace ft
 		const_reference back() const {return _buff[_size - 1];}
 		//  modifiers:
 		void push_back(const T& val){
-			if (_size == _capacity)
+			if (_size  == _capacity)
 				reserve(_capacity ? _capacity * 2 : 1);
 			_alloc.construct(_buff + _size, val);
 			++_size;
