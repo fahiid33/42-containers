@@ -6,7 +6,7 @@
 /*   By: fstitou <fstitou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/16 00:35:46 by fstitou           #+#    #+#             */
-/*   Updated: 2023/02/17 11:26:46 by fstitou          ###   ########.fr       */
+/*   Updated: 2023/02/17 12:42:53 by fstitou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,7 +110,10 @@ namespace ft
     		return *this;
 		}
 		template <class InputIterator>
-		void assign(InputIterator first, InputIterator last);
+		void assign(InputIterator first, InputIterator last){
+			Vector<T, Allocator> temp(first, last);
+			this->swap(temp);
+		}
 		void assign(size_t n, const T& u){
 			Vector<T, Allocator> temp(n, u);
 			this->swap(temp);
@@ -127,9 +130,12 @@ namespace ft
 		const_reverse_iterator rend() const {return const_reverse_iterator(this->begin());}
 		// 23.2.4.2 capacity:
 		size_t size() const {return this->_size;}
-		size_t max_size() const{return std::numeric_limits<std::size_t>::max() / sizeof(T);}
-		void resize(size_t sz, const T& val = value_type()){
-			if (sz <= _size) 
+		size_t max_size() const{return ((std::numeric_limits<size_type>::max() / sizeof(T) ) / 2);}
+		void resize(size_t sz, const T& val = value_type())
+		{
+			if (sz > this->max_size())
+				throw std::length_error("vector");
+			if (sz <= _size)
 			{
 				while (sz < _size) 
 				{
