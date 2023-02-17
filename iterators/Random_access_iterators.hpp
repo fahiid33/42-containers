@@ -6,7 +6,7 @@
 /*   By: fstitou <fstitou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/08 23:55:24 by fstitou           #+#    #+#             */
-/*   Updated: 2023/02/16 11:09:56 by fstitou          ###   ########.fr       */
+/*   Updated: 2023/02/17 00:10:50 by fstitou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,8 @@ namespace ft
 
             VectorIterator operator+(difference_type n) const { return VectorIterator(_ptr + n); }
             VectorIterator operator-(difference_type n) const { return VectorIterator(_ptr - n); }
+            friend VectorIterator operator+(difference_type lhs, const VectorIterator& rhs) {return VectorIterator(lhs+rhs._ptr);};
+            friend VectorIterator operator-(difference_type lhs, const VectorIterator& rhs) {return VectorIterator(lhs-rhs._ptr);};
 
             difference_type operator-(const VectorIterator& other) const { return _ptr - other._ptr; }
 
@@ -86,14 +88,31 @@ namespace ft
                 return *this;
             }
 
-            bool operator==(const VectorIterator& other) const { return _ptr == other._ptr; }
-            bool operator!=(const VectorIterator& other) const { return _ptr != other._ptr; }
+            // bool operator==(const VectorIterator& other) const { return _ptr == other._ptr; }
+            // bool operator!=(const VectorIterator& other) const { return _ptr != other._ptr; }
+
+            bool operator==(VectorIterator const& a) const
+            {
+                if (this->_ptr == a.base())
+                    return true;
+                else
+                    return false;
+            }
+            bool operator!=(VectorIterator const& a) const 
+            {
+                if (this->_ptr == a.base())
+                    return false;
+                else
+                    return true;
+            }
+            
             bool operator<(const VectorIterator& other) const { return _ptr < other._ptr; }
             bool operator>(const VectorIterator& other) const { return _ptr > other._ptr; }
             bool operator<=(const VectorIterator& other) const { return _ptr <= other._ptr; }
             bool operator>=(const VectorIterator& other) const { return _ptr >= other._ptr; }
 
             pointer base() const { return _ptr; }
+            
             operator VectorIterator<const T>() const {
                 return VectorIterator<const T>(_ptr);
             }
