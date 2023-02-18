@@ -6,7 +6,7 @@
 /*   By: fstitou <fstitou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/08 23:55:24 by fstitou           #+#    #+#             */
-/*   Updated: 2023/02/17 15:26:36 by fstitou          ###   ########.fr       */
+/*   Updated: 2023/02/18 23:49:02 by fstitou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,7 @@ namespace ft
 
             VectorIterator operator+(difference_type n) const { return VectorIterator(_ptr + n); }
             VectorIterator operator-(difference_type n) const { return VectorIterator(_ptr - n); }
+            ///========friend overloads for difference_type lhs=====/// 
             friend VectorIterator operator+(difference_type lhs, const VectorIterator& rhs) {return VectorIterator(lhs+rhs._ptr);};
             friend VectorIterator operator-(difference_type lhs, const VectorIterator& rhs) {return VectorIterator(lhs-rhs._ptr);};
 
@@ -122,6 +123,7 @@ namespace ft
     };
 }
 
-
+// VectorIterator operator+(difference_type lhs, const VectorIterator& rhs) {return VectorIterator(lhs+rhs._ptr);};
+// VectorIterator operator-(difference_type lhs, const VectorIterator& rhs) {return VectorIterator(lhs-rhs._ptr);};
 
 #endif

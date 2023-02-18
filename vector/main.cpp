@@ -6,7 +6,7 @@
 /*   By: fstitou <fstitou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/16 00:38:26 by fstitou           #+#    #+#             */
-/*   Updated: 2023/02/17 13:41:58 by fstitou          ###   ########.fr       */
+/*   Updated: 2023/02/19 00:25:59 by fstitou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -1457,7 +1457,6 @@ void vector_tests(void)
 
         for (size_t i = 0; i < ft_v2.size(); ++i)
             ft_s2 += ft_v2.at(i);
-		
         EQUAL((s1 == ft_s1 && z1 == ft_z1 && c1 == ft_c1) && (s2 == ft_s2 && z2 == ft_z2 && c2 == ft_c2)
         && (s3 == ft_s3 && z3 == ft_z3 && c3 == ft_c3));
     }
@@ -3220,19 +3219,19 @@ catch(std::exception &e)
 
 }
 }
-// void alarm_handler(int seg)
-// {
-// 	(void)seg;
-// 	std::cout << "\033[1;33mTLE\033[0m\n";
-// 	kill(getpid(), SIGINT);
-// }
+void alarm_handler(int seg)
+{
+	(void)seg;
+	std::cout << "\033[1;33mTLE\033[0m\n";
+	kill(getpid(), SIGINT);
+}
 int main()
 {
-  signal(SIGALRM, SIG_IGN);
-	iterator_tests();
-  const_iterator_tests();
-  reverse_iterator_tests();
-  reverse_iterator_with_ft_vector();
-  vector_tests();
-
+    signal(SIGALRM, alarm_handler);
+    iterator_tests();
+    const_iterator_tests();
+    reverse_iterator_tests();
+    reverse_iterator_with_ft_vector();
+    vector_tests();
+    // system("leaks vector");
 }

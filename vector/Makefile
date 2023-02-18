@@ -6,12 +6,12 @@
 #    By: fstitou <fstitou@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/16 00:34:21 by fstitou           #+#    #+#              #
-#    Updated: 2023/02/17 13:12:32 by fstitou          ###   ########.fr        #
+#    Updated: 2023/02/19 00:27:05 by fstitou          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME	= vector
-CC		= c++ -std=c++11 -fsanitize=address -g3	
+CC		= c++ -std=c++98 -fsanitize=address -g3	
 FLAGS	= -Wall -Werror -Wextra
 SRCS 	= main.cpp
 			

@@ -6,7 +6,7 @@
 /*   By: fstitou <fstitou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/16 00:35:46 by fstitou           #+#    #+#             */
-/*   Updated: 2023/02/17 13:46:07 by fstitou          ###   ########.fr       */
+/*   Updated: 2023/02/19 00:24:41 by fstitou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,7 @@ namespace ft
 		explicit Vector(size_t n, const T& value = T(),
 		const Allocator& = Allocator())
 		{
+			
 			if (n > this->max_size())
 				throw std::length_error("vector");
 			this->_alloc = Allocator();
@@ -122,8 +123,20 @@ namespace ft
 			this->swap(temp);
 		}
 		void assign(size_t n, const T& u){
-			Vector<T, Allocator> temp(n, u);
-			this->swap(temp);
+			if (n > _capacity) {
+				pointer new_data = _alloc.allocate(n);
+				for (size_t i = 0; i < _size; i++) {
+					_alloc.construct(&new_data[i], _buff[i]);
+					_alloc.destroy(&_buff[i]);
+				}
+				_alloc.deallocate(_buff, _capacity);
+				_buff = new_data;
+				_capacity = n;
+			}
+			for (size_t i = 0; i < n; i++) {
+				_alloc.construct(&_buff[i], u);
+			}
+			_size = n;
 		}
 		allocator_type get_allocator() const {return Allocator();}
 		//iterators:
@@ -137,7 +150,7 @@ namespace ft
 		const_reverse_iterator rend() const {return const_reverse_iterator(this->begin());}
 		// 23.2.4.2 capacity:
 		size_t size() const {return this->_size;}
-		size_t max_size() const{return ((std::numeric_limits<size_type>::max() / sizeof(T) ) / 2);}
+		size_t max_size() const{return ((std::numeric_limits<size_type>::max() / sizeof(T) ));}
 		void resize(size_t sz, const T& val = value_type())
 		{
 			 if (sz > _size) {
