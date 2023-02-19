@@ -6,7 +6,7 @@
 /*   By: fstitou <fstitou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/16 00:37:24 by fstitou           #+#    #+#             */
-/*   Updated: 2023/02/09 00:03:36 by fstitou          ###   ########.fr       */
+/*   Updated: 2023/02/19 04:37:12 by fstitou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,5 +15,6 @@
 int main()
 {
     ft::map <std::string, int>map;
-    ft::map map1(map);
+    ft::map <std::string, int>map1(map);
+    // map1(map);
 }
