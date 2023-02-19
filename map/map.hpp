@@ -6,7 +6,7 @@
 /*   By: fstitou <fstitou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/16 00:35:24 by fstitou           #+#    #+#             */
-/*   Updated: 2023/02/19 04:36:57 by fstitou          ###   ########.fr       */
+/*   Updated: 2023/02/19 04:52:13 by fstitou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,8 @@
 #include <algorithm>
 #include <utility>
 #include "../iterators/reverse_iterator.hpp"
-
+#include "../iterators/iterators_traits.hpp"
+#include <type_traits>
 
 namespace ft 
 {
@@ -84,9 +85,12 @@ template <class Key, class T, class Compare = std::less<Key>,
         // reverse_iterator rend();
         // const_reverse_iterator rend() const;
         // capacity:
-        bool empty() const;
-        size_type size() const;
-        size_type max_size() const;
+        bool empty() const {return (tree_size == 0);}
+        size_type size() const {return (tree_size);}
+        size_type max_size() const{
+            return std::min<size_type>(std::allocator_traits<Allocator>::max_size(_alloc),
+                                   std::numeric_limits<difference_type>::max());
+        }
         // element access:
         T& operator[](const key_type& x);
         // modifiers:
