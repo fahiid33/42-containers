@@ -6,7 +6,7 @@
 /*   By: fstitou <fstitou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/16 00:35:24 by fstitou           #+#    #+#             */
-/*   Updated: 2023/02/20 11:56:34 by fstitou          ###   ########.fr       */
+/*   Updated: 2023/02/20 12:30:25 by fstitou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,6 @@ template <class Key, class T, class Compare = std::less<Key>,
         }
         map<Key,T,Compare,Allocator>&
         operator=(const map<Key,T,Compare,Allocator>& x){
-            std::cout << "map copy assi called\n";
             if (this != &x)
             {
                 this->tree_size = x.tree_size;
@@ -88,13 +87,13 @@ template <class Key, class T, class Compare = std::less<Key>,
         iterator begin()
         {
             node_type *tmp = tree.findmin();
-            return (iterator(tmp, tree._root));
+            return (iterator(tmp, tree.root));
         }
         // const_iterator begin() const;
         iterator end()
         {
             node_type *tmp = tree.findmax();
-            return (iterator(tmp, tree._root));
+            return (iterator(tmp, tree.root));
         }
         // const_iterator end() const;
         // reverse_iterator rbegin();
@@ -107,7 +106,13 @@ template <class Key, class T, class Compare = std::less<Key>,
         size_type max_size() const{
         }
         // element access:
-        T& operator[](const key_type& x);
+        T& operator[](const key_type& x)
+        {
+            // node_type* p = tree.insert(ft::make_pair(x, mapped_type())); //  To do : implement insert
+            // node_type *node = tree.search(p->data.first); // to do : implement search
+            // return (node->data.second);
+        }
+
         // modifiers:
         // std::pair<iterator, bool> insert(const value_type& x);// to change (ft::)
         // iterator insert(iterator position, const value_type& x);
