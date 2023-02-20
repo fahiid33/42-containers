@@ -6,7 +6,7 @@
 /*   By: fstitou <fstitou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/16 00:35:24 by fstitou           #+#    #+#             */
-/*   Updated: 2023/02/20 03:28:29 by fstitou          ###   ########.fr       */
+/*   Updated: 2023/02/20 11:56:34 by fstitou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 #include <utility>
 #include "../iterators/reverse_iterator.hpp"
 #include "../iterators/iterators_traits.hpp"
+#include "../iterators/utilities.hpp"
 #include "../iterators/Bidirectional_iterators.hpp"
 #include <type_traits>
 #include "AvlTree.hpp"
@@ -36,17 +37,19 @@ template <class Key, class T, class Compare = std::less<Key>,
        public :
         typedef Key key_type;
         typedef T mapped_type;
-        typedef std::pair<const Key, T> value_type; // to change (ft::)
+        typedef ft::pair<const Key, T> value_type;
         typedef Compare key_compare;
         typedef Allocator allocator_type;
         typedef typename Allocator::reference reference;
         typedef typename Allocator::const_reference const_reference;
-        // typedef ft::VectorIterator<value_type>					iterator;
-        // typedef ft::VectorIterator<const value_type>			const_iterator;  // to change (ft::mapiter..)
-        typedef typename allocator_type::size_type					size_type; 
-        // typedef typename iterator_traits<typename map<Key, T, Compare, Allocator>::iterator>::difference_type difference_type;
         typedef typename Allocator::pointer pointer;
         typedef typename Allocator::const_pointer const_pointer;
+        typedef ft::Node<value_type,allocator_type> node_type;
+        typedef typename ft::AvlTree<value_type, key_compare, allocator_type>  tree_type;
+        typedef typename ft::Bidirectional_iterator<value_type, node_type*>                 iterator;
+        typedef typename ft::Bidirectional_iterator<const value_type, node_type*>     const_iterator;
+        typedef typename allocator_type::size_type					size_type;
+        typedef ptrdiff_t difference_type;
         // typedef std::reverse_iterator<iterator> reverse_iterator;
         // typedef std::reverse_iterator<const_iterator> const_reverse_iterator;
         class value_compare : public std::binary_function<value_type,value_type,bool> 
@@ -61,17 +64,14 @@ template <class Key, class T, class Compare = std::less<Key>,
         // 23.3.1.1 construct/copy/destroy:
        explicit map(const key_compare& comp = key_compare(), const allocator_type& alloc = allocator_type())
         : tree_size(0), _comp(comp), _alloc(alloc){
-            std::cout << "map def constr called\n";
         }
         template <class InputIterator>
         map(InputIterator first, InputIterator last,
         const Compare& comp = Compare(), const Allocator& = Allocator());
         map(const map<Key,T,Compare,Allocator>& x)  {
             *this = x ;
-            std::cout << "map copy costr called\n";
         }
         ~map(){
-            std::cout << "map destr called\n";
         }
         map<Key,T,Compare,Allocator>&
         operator=(const map<Key,T,Compare,Allocator>& x){
@@ -85,9 +85,17 @@ template <class Key, class T, class Compare = std::less<Key>,
             return *this;
         }
         // iterators:
-        // iterator begin();
+        iterator begin()
+        {
+            node_type *tmp = tree.findmin();
+            return (iterator(tmp, tree._root));
+        }
         // const_iterator begin() const;
-        // iterator end();
+        iterator end()
+        {
+            node_type *tmp = tree.findmax();
+            return (iterator(tmp, tree._root));
+        }
         // const_iterator end() const;
         // reverse_iterator rbegin();
         // const_reverse_iterator rbegin() const;
@@ -127,6 +135,7 @@ template <class Key, class T, class Compare = std::less<Key>,
         // equal_range(const key_type& x) const;
         private:
         size_type tree_size;
+        tree_type tree;
         key_compare _comp;
         Allocator _alloc;
     };

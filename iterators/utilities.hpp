@@ -95,7 +95,70 @@ bool lexicographical_compare (InputIterator1 first1, InputIterator1 last1,
 	}
 	return (first2!=last2);
 }
-}
+
+// pair
+template <class type1, class type2>
+    struct pair
+    {
+        typedef type1 first_type;
+        typedef type2 second_type;
+
+        first_type first;
+        second_type second;
+
+        pair():first(), second() {}
+        pair(const first_type& a, const second_type& b):first(a), second(b) {};
+        pair(const pair<type1, type2>& x):first(x.first), second(x.second) {};
+
+        pair& operator=(const pair<type1, type2>& x)
+        {
+            first = x.first;
+            second = x.second;
+            return *this;
+        }
+    };
+    // relational operators for pair
+    template <class type1, class type2>
+    bool operator== (const pair<type1,type2>& lhs, const pair<type1,type2>& rhs)
+    {
+        return lhs.first==rhs.first && lhs.second==rhs.second;
+    }
+    template <class type1, class type2>
+    bool operator!= (const pair<type1,type2>& lhs, const pair<type1,type2>& rhs)
+    {
+        return !(lhs==rhs);
+    }
+    template <class type1, class type2>
+    bool operator<  (const pair<type1,type2>& lhs, const pair<type1,type2>& rhs)
+    {
+        return lhs.first<rhs.first || (!(rhs.first<lhs.first) && lhs.second<rhs.second);
+    }
+
+    template <class type1, class type2>
+    bool operator<= (const pair<type1,type2>& lhs, const pair<type1,type2>& rhs)
+    {
+        return !(rhs<lhs);
+    }
+
+    template <class type1, class type2>
+    bool operator>  (const pair<type1,type2>& lhs, const pair<type1,type2>& rhs)
+    {
+        return rhs<lhs;
+    }
+
+    template <class type1, class type2>
+    bool operator>= (const pair<type1,type2>& lhs, const pair<type1,type2>& rhs)
+    {
+        return !(lhs<rhs);
+    }
+
+    // make_pair
+    template <class type1, class type2>
+    pair<type1,type2> make_pair (type1 x, type2 y)
+    {
+        return ( pair<type1,type2>(x,y) );
+    }
+};
 
 
 #endif

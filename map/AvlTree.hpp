@@ -6,7 +6,7 @@
 /*   By: fstitou <fstitou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/19 23:50:31 by fstitou           #+#    #+#             */
-/*   Updated: 2023/02/20 03:25:45 by fstitou          ###   ########.fr       */
+/*   Updated: 2023/02/20 11:45:36 by fstitou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,9 +69,66 @@ namespace ft
         bool operator!=(const Node & rhs) {return !(*this == rhs);}
 
     };
-    
+    template < class T, typename  Compare = std::less<typename T::first_type>,
+     class Alloc = std::allocator<T> >  // works with any type that has a nested 
+                                        // first_type comparable with Compare type
     class AvlTree
     {
+        public :
+        typedef Node<T, Alloc> Node_T;
+        typedef Alloc Allocator_type;
+        typedef typename T::first_type key_type; // type of the key
+        typedef typename T::second_type val_type; // type of the value
+        typedef typename Alloc::template rebind<Node_T>::other Node_allocator;
+        Node_T *root;
+
+        private :
+        Node_allocator _Alloc_node;
+        Compare _comp;
+        size_t _size;
+        Allocator_type _alloc_Val;
+
+        public :
+        AvlTree() : root(NULL), _size(0) {}
+        AvlTree(const AvlTree & src)
+        {
+            this->root = src.root;
+            this->_size = src._size;
+            *this = src;
+        }
+        ~AvlTree() {};
+        
+        AvlTree &operator=(const AvlTree & rhs)
+        {
+            if (this != &rhs)
+            {
+                this->root = rhs.root;
+                this->_size = rhs._size;
+                this->_alloc_Val = rhs._alloc_Val;
+                this->_Alloc_node = rhs._Alloc_node;
+            }
+            return *this;
+        }
+        Node_T *findmin() const {return findmin(root);}
+        Node_T *findmin(Node_T *node) const
+        {
+            if (node)
+            {
+                while (node->left != NULL)
+                    node = node->left;
+            }
+            return node;
+        }
+        Node_T *findmax() const {return findmax(root);}
+        Node_T *findmax(Node_T *node) const
+        {
+            if (node)
+            {
+                while (node->right != NULL)
+                    node = node->right;
+            }
+            return node;
+        }
         
     };
     
