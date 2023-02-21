@@ -6,7 +6,7 @@
 /*   By: fstitou <fstitou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/16 00:37:24 by fstitou           #+#    #+#             */
-/*   Updated: 2023/02/20 12:16:16 by fstitou          ###   ########.fr       */
+/*   Updated: 2023/02/21 23:16:33 by fstitou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,14 +40,12 @@ int main()
     
     // ft::bidirectional_iterator operator++
     
-    // ft::Bidirectional_iterator<int> it1;
-    
     //operator++ demonstration
     //     8
-    //   /   \//
-    //  4     12
-    //       /  \//
-    //      10  14
+    //   /   \        //
+    //  4    12
+    //      /  \     //
+    //     10  14
 
     //Let's create a bidirectional iterator pointing to the root node (8)
     // and call ++ on it. The first step checks if the current node (8) 

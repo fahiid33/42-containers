@@ -6,7 +6,7 @@
 /*   By: fstitou <fstitou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/16 00:35:24 by fstitou           #+#    #+#             */
-/*   Updated: 2023/02/20 12:30:25 by fstitou          ###   ########.fr       */
+/*   Updated: 2023/02/21 23:15:39 by fstitou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,6 +108,7 @@ template <class Key, class T, class Compare = std::less<Key>,
         // element access:
         T& operator[](const key_type& x)
         {
+            (void)x;
             // node_type* p = tree.insert(ft::make_pair(x, mapped_type())); //  To do : implement insert
             // node_type *node = tree.search(p->data.first); // to do : implement search
             // return (node->data.second);
