@@ -6,7 +6,7 @@
 /*   By: fstitou <fstitou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/16 00:36:25 by fstitou           #+#    #+#             */
-/*   Updated: 2023/02/20 12:13:43 by fstitou          ###   ########.fr       */
+/*   Updated: 2023/02/22 00:10:15 by fstitou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,17 +51,17 @@ namespace ft
         pointer operator->() const {return &(_node->data);}
         Bidirectional_iterator& operator++()                       
         {
-            if (_node->right != NULL)
-            {
-                _node = _node->right;
-                while (_node->left != NULL)
-                    _node = _node->left;
+            if (_node->right != NULL) // check if the current node (8) has a right child                            //     8
+            {                                                                                                       //   /   \        //
+                _node = _node->right; // the current node is set to 12                                             //   4    12
+                while (_node->left != NULL)//the left most path is followed until the leftmost child (10) is found  //      /  \     //
+                    _node = _node->left;                                                                            //     10  14
             }
-            else
+            else                        //Let's call ++ again This time, the current node (10)does not have a right child
             {
                 Node_T tmp = _node;
-                _node = _node->parent;
-                while (_node != NULL && tmp == _node->right)
+                _node = _node->parent; // the current node is set to its parent (12)
+                while (_node != NULL && tmp == _node->right) // keep moving up the tree until a node is found that is not the right child of its parent
                 {
                     tmp = _node;
                     _node = _node->parent;

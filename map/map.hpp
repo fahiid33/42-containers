@@ -6,7 +6,7 @@
 /*   By: fstitou <fstitou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/16 00:35:24 by fstitou           #+#    #+#             */
-/*   Updated: 2023/02/21 23:15:39 by fstitou          ###   ########.fr       */
+/*   Updated: 2023/02/21 23:56:08 by fstitou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,9 @@ template <class Key, class T, class Compare = std::less<Key>,
         map(const map<Key,T,Compare,Allocator>& x)  {
             *this = x ;
         }
-        ~map(){
+        ~map() // TO DO
+        {  
+            // clear();  erases all elements from the map, before the destructor of each element is called to release any resources owned by the map 
         }
         map<Key,T,Compare,Allocator>&
         operator=(const map<Key,T,Compare,Allocator>& x){

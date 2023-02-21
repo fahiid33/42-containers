@@ -6,7 +6,7 @@
 /*   By: fstitou <fstitou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/16 00:37:24 by fstitou           #+#    #+#             */
-/*   Updated: 2023/02/21 23:16:33 by fstitou          ###   ########.fr       */
+/*   Updated: 2023/02/22 00:07:02 by fstitou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,11 +50,11 @@ int main()
     //Let's create a bidirectional iterator pointing to the root node (8)
     // and call ++ on it. The first step checks if the current node (8) 
     //has a right child. It does, so the current node is set to 
-    //12 and then the leftmost path is followed until the leftmost child
+    //12 and then the left most path is followed until the leftmost child
     // (10) is found.The iterator now points to 10. Let's call ++ again.
     // This time, the current node (10)does not have a right child, so 
     //the current node is set to its parent (12)and then we keep moving 
     //up the tree until a node is found that is not the right child of 
-    //its parent.This node is 8, which is the next largest element in the
+    //its parent.This node is 12, which is the next largest element in the
     // container. The iterator now points to 12.
 }
