@@ -6,7 +6,7 @@
 /*   By: fstitou <fstitou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/16 00:34:56 by fstitou           #+#    #+#             */
-/*   Updated: 2023/02/21 23:51:56 by fstitou          ###   ########.fr       */
+/*   Updated: 2023/02/22 09:25:02 by fstitou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,12 +30,20 @@ namespace ft
         container_type c;
         public:
         explicit stack(const container_type& cntr = container_type()) : c(cntr){}
+        /////// member functions ///////
         bool empty() const { return c.empty(); }
         size_type size() const { return c.size(); }
         value_type& top() { return c.back(); }
         const value_type& top() const { return c.back(); }
         void push(const value_type& x) { c.push_back(x); }
         void pop() { c.pop_back(); }
+        ///////// friend bool operators ////////
+        friend bool operator== (const stack& lhs, const stack& rhs){ return (lhs.c == rhs.c); }
+        friend bool operator!= (const stack& lhs, const stack& rhs){ return (lhs.c != rhs.c); }
+        friend bool operator<  (const stack& lhs, const stack& rhs){ return (lhs.c < rhs.c); }
+        friend bool operator<= (const stack& lhs, const stack& rhs){ return (lhs.c <= rhs.c); }
+        friend bool operator>  (const stack& lhs, const stack& rhs){ return (lhs.c > rhs.c); }
+        friend bool operator>= (const stack& lhs, const stack& rhs){ return (lhs.c >= rhs.c); }
     };
     //// non member overloads////
     template <class T, class Container>
