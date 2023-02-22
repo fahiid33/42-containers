@@ -15,5 +15,4 @@ https://cdn.intra.42.fr/pdf/pdf/61993/en.subject.pdf
 
 Resources : 
 
-file:///C:/Users/user/Downloads/ISO+IEC+14882-1998.pdf
- 
+https://www.google.com/url?sa=t&rct=j&q=&esrc=s&source=web&cd=&cad=rja&uact=8&ved=2ahUKEwjZ5Zzi5qj9AhVEZaQEHRAWB5QQFnoECAsQAQ&url=https%3A%2F%2Fwww.lirmm.fr%2F~ducour%2FDoc-objets%2FISO%2BIEC%2B14882-1998.pdf&usg=AOvVaw3Z2GmX7XUqXG97WptBBwSa 
