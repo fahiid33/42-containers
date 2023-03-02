@@ -6,7 +6,7 @@
 /*   By: fstitou <fstitou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/16 00:37:42 by fstitou           #+#    #+#             */
-/*   Updated: 2023/02/22 09:22:50 by fstitou          ###   ########.fr       */
+/*   Updated: 2023/03/02 17:10:31 by fstitou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -343,6 +343,6 @@ int main()
 
     std::cout << YELLOW << "Testing relational operators;" << RESET << std::endl;
     TEST_CASE(testRelationalOperators);
-
+	std::cout << "tests passed" << std::endl;
 	return 0;
 }
